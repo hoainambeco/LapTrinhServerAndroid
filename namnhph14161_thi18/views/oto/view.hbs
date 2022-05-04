@@ -1,0 +1,132 @@
+<script>
+    function deleteUser(id) {
+        document.getElementById("DpInputID").value = id;
+    }
+</script>
+<div class="content">
+    <form class="d-flex" action="/oto/find" method="POST" autocomplete="off">
+        <input
+                style="margin-top: 5px; font-size: 20px"
+                class="form-control me-2  bg-light"
+                type="search"
+                name="IPsearch"
+                placeholder="Search"
+                aria-label="Search"
+        />
+        <button class="btn btn-outline-dark my-1 mx-1" type="submit">
+            Search
+        </button>
+    </form>
+    <div class="row table-responsive table-wrapper-scroll-y my-custom-scrollbar"
+         style="display: contents; overflow: auto">
+        {{#if oto}}
+        <table class="center table table-dark table-striped table-borderless p-0 table-full-width"
+               style="display: grid;overflow: auto;">
+            <tbody style="height: 800px; flex-direction: column; flex-wrap: wrap; margin: auto; min-width: 1800px">
+            <tr>
+                <td>ID</td>
+                <td>Mã ô tô</td>
+                <td>Nhãn hiệu</td>
+                <td>Năm sản xuất</td>
+                <td>Giá gốc</td>
+                <td>Giá bán</td>
+                <td>Ảnh đại diện</td>
+                <td></td>
+            </tr>
+            {{#each oto}}
+                <tr class="col-12">
+                    <td class="col-1">{{this._id}}</td>
+                    <td class="col-1">{{this.Maoto}}</td>
+                    <td class="col-1">{{this.NhanHieu}}</td>
+                    <td class="col-1">{{this.NamSX}}</td>
+                    <td class="col-1">{{this.GiaGoc}}</td>
+                    <td class="col-1">{{this.GiaBan}}</td>
+                    <td class="col-2"><img src="{{this.AnhDaiDien}}" alt="" style="width: 100px; height: 100px;"></td>
+                    <td class="col-4">
+                        <a href="oto/edit/{{this._id}}" class="btn btn-primary">
+                            Sửa
+                        </a>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#DeleteModal"
+                                onclick="deleteUser('{{this._id}}')"
+                        >
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        {{else}}
+            <div class="alert alert-danger" role="alert">
+                Không tìm thấy kết quả nào
+            </div>
+        {{/if}}
+        <!-- Button trigger modal -->
+        <div class="row" style="margin: auto;">
+            <a href="/add" class="btn btn-primary"
+            >
+                Thêm ô tô
+            </a>
+        </div>
+
+        </div>
+        <!-- Modal Delete-->
+        <div
+                class="modal fade"
+                id="DeleteModal"
+                taboto="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/oto/delete" method="POST" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xóa ghi chú</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="DpInputID" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                name="DpInputID"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="DpInputID"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                    >No
+                                    </button>
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                    >Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<h1>Register</h1>
+{{#if msg}}
+    <p>{{{msg}}}</p>
+{{/if}}
+<form action="" method="post">
+    Username: <input type="text" name="username" value="{{#if body}}{{body.username}}{{/if}}"> <br>
+    Password: <input type="password" name="passwd" > <br>
+    Confirm password: <input type="password" name="passwd2"> <br>
+    Email: <input type="email" name="email" value="{{#if body}}{{body.email}}{{/if}}"> <br>
+
+    Anh <input type="file" id="image"  onchange="previewFile()"  /> <br>
+    <img id="img_preview" src="" height="200" alt="Image preview...">  <br>
+    <input type="hidden" name="anh_dai_dien" id="anh_dai_dien">
+
+    <button type="submit">Register</button>
+
+</form>
+
+<script>
+    function previewFile() {
+        const preview = document.querySelector('#img_preview');
+        const file =  document.querySelector('#image').files[0];
+        const anh_dai_dien = document.querySelector('#anh_dai_dien');
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            // convert image file to base64 string
+            preview.src = reader.result;
+            anh_dai_dien.value = reader.result;// cái này để post lên server
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>

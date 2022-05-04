@@ -1,0 +1,27 @@
+<div class="login">
+  <h1>Đăng ký</h1>
+  <form method="post" action="/register">
+    <input type="text" name="registerf" placeholder="First Name" required="required" />
+    <input type="text" name="registerl" placeholder="Last Name" required="required" />
+    <input type="text" name="registeru" placeholder="UserName" required="required" />
+    <input type="email" name="registere" placeholder="Email" required="required" />
+    <input
+      type="password"
+      name="registerp"
+      placeholder="Password"
+      required="required"
+    />
+    <input
+      type="password"
+      name="registercp"
+      placeholder="Confirm Password"
+      required="required"
+    />
+      {{#if message}}
+          <label for="message" class="text-danger my-1">{{message}}</label>
+      {{/if}}
+    <Button type="submit" class="btn btn-primary btn-block btn-large">
+      Đăng ký
+    </Button>
+  </form>
+</div>

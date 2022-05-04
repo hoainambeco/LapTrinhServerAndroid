@@ -1,0 +1,434 @@
+<div class="content">
+    <nav
+            class="navbar navbar-expand-lg navbar-light bg-light"
+            style="opacity: 0.75;"
+    >
+        <div class="container-fluid">
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/home"
+                                style="color: black"
+                        >Admin center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/user"
+                                style="color: black"
+                        >Người dùng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                href="/comics"
+                                style="color: black"
+                        >Truyện tranh</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" href="/author" style="color: black">Tác-->
+<!--                            giả</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" href="/category" style="color: black">Thể-->
+<!--                            loại</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" href="/nxb" style="color: black">Nhà xuất-->
+<!--                            bản</a>-->
+<!--                    </li>-->
+                </ul>
+                <form class="d-flex">
+                    <input
+                            style="    margin-top: 5px;"
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                    />
+                    <button class="btn btn-outline-dark my-1 mx-1" type="submit">
+                        Search
+                    </button>
+
+                    <a href="/logout" class="btn btn-outline-dark my-1 mx-1">
+                        Logout
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="row" style="display: contents;">
+        <table class="table table-dark table-borderless p-0">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Thể loại</th>
+                <th scope="col">Tác giả</th>
+                <th scope="col">Nhà xuất bản</th>
+                <th scope="col">Ngày cập nhật</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each comics}}
+                <tr>
+                    <td>{{this.ID}}</td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.Category}}</td>
+                    <td>{{this.Author}}</td>
+                    <td>{{this.NXB}}</td>
+                    <td>{{this.UpdateDate}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <!-- Button trigger modal -->
+        <div class="row" style="margin: auto;">
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+            >
+                Thêm truyện
+            </button>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#UpdateModal"
+            >
+                Sửa
+            </button>
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#DeleteModal"
+            >
+                Xóa
+            </button>
+        </div>
+        <!-- Modal add-->
+        <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm Truyện</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-auto">
+                            <div class="mb-4 row">
+                                <label for="InputID" class="col-sm-3 col-form-label">ID:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="InputID"
+                                            placeholder="ID"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputFullName" class="col-sm-3 col-form-label">Tên
+                                    Truyện:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="InputFullName"
+                                            placeholder="FullName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputUserName" class="col-sm-3 col-form-label">Thể
+                                    loại:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="InputUserName"
+                                            placeholder="UserName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="staticEmail" class="col-sm-3 col-form-label">Tác
+                                    giả:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="staticEmail"
+                                            placeholder="email@example.com"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="staticPassword" class="col-sm-3 col-form-label">Nhà
+                                    xuất bản</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="staticPassword"
+                                            placeholder="password"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                        for="staticCPassword"
+                                        class="col-sm-3 col-form-label"
+                                >Ngày cập nhật</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="staticCPassword"
+                                            placeholder="Confirm password"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                        >Close
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                onclick="{alert('thêm thành công')}"
+                        >Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal update-->
+        <div
+                class="modal fade"
+                id="UpdateModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <script>
+                function setData(value) {
+                    document.getElementById('UpInputID').value =
+                            value;
+                }
+            </script>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sửa truyện</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-auto">
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">Truyện:</label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        <select name="cate_id" onchange="{setData(this.value)}">
+                                            {{#each user}}
+                                                <option value="{{this.ID}}">{{this.UserName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label for="InputID" class="col-sm-3 col-form-label">ID:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="InputID"
+                                            placeholder="ID"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputFullName" class="col-sm-3 col-form-label">Tên
+                                    Truyện:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="InputFullName"
+                                            placeholder="FullName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputUserName" class="col-sm-3 col-form-label">Thể
+                                    loại:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="InputUserName"
+                                            placeholder="UserName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="staticEmail" class="col-sm-3 col-form-label">Tác
+                                    giả:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            id="staticEmail"
+                                            placeholder="email@example.com"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="staticPassword" class="col-sm-3 col-form-label">Nhà
+                                    xuất bản</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="staticPassword"
+                                            placeholder="password"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                        for="staticCPassword"
+                                        class="col-sm-3 col-form-label"
+                                >Ngày cập nhật</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="password"
+                                            class="form-control"
+                                            id="staticCPassword"
+                                            placeholder="Confirm password"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                        >Close
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                onclick="{alert('sửa thành công')}"
+                        >Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete-->
+        <div
+                class="modal fade"
+                id="DeleteModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <script>
+                function setData(value) {
+                    document.getElementById('UpInputID').value =
+                            value;
+                }
+            </script>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xóa truyện</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-auto">
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label">Truyện:</label>
+                                <div class="col-sm-9">
+                                    <label>
+                                        <select name="cate_id" onchange="{setData(this.value)}">
+                                            {{#each user}}
+                                                <option value="{{this.ID}}">{{this.UserName}}</option>
+                                            {{/each}}
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                >Close
+                                </button>
+                                <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        data-bs-dismiss="modal"
+                                        onclick="{alert('xóa thành công')}"
+                                >Save changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

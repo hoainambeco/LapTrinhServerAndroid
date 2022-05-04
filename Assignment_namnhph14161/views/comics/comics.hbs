@@ -1,0 +1,516 @@
+<script>
+    function editComics(id, Ten,AnhDaiDien, TheLoai, TacGia, NXB, NgayCapNhat) {
+        document.getElementById('UpdateID').value = id;
+        document.getElementById('UpdateTen').value = Ten;
+        document.querySelector('#img_previews').src = AnhDaiDien;
+        document.getElementById('UpdateTheLoai').value = TheLoai;
+        document.getElementById('UpdateTacGia').value = TacGia;
+        document.getElementById('UpdateNXB').value = NXB;
+        document.getElementById('UpdateNCN').value = NgayCapNhat;
+    }
+
+    function deleteUser(id) {
+        document.getElementById("DpInputID").value = id;
+    }
+
+    function previewFile() {
+        const preview = document.querySelector('#img_preview');
+        const file = document.querySelector('#image').files[0];
+        const anh_dai_dien = document.querySelector('#anh_dai_dien');
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+            anh_dai_dien.value = reader.result;// cái này để post lên server
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function previewFileEdit() {
+        const preview = document.querySelector('#img_previews');
+        const file = document.querySelector('#imagess').files[0];
+        const anh_dai_dien = document.querySelector('#anh_dai_diens');
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+            anh_dai_dien.value = reader.result;// cái này để post lên server
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function converBase64() {
+        const file = document.querySelector('#images').files[1];
+        const anh_noi_dung = document.querySelector('#anh_noi_dung');
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            anh_noi_dung.value = reader.result;
+            alert(file.name);
+        }, false);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+<div class="content">
+    <nav
+            class="navbar navbar-expand-lg navbar-light bg-light"
+            style="opacity: 0.75;"
+    >
+        <div class="container-fluid">
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/home"
+                                style="color: black"
+                        >Admin center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/user"
+                                style="color: black"
+                        >Người dùng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                href="/comics"
+                                style="color: black"
+                        >Truyện tranh</a>
+                    </li>
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" href="/author" style="color: black">Tác-->
+                    <!--                            giả</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" href="/category" style="color: black">Thể-->
+                    <!--                            loại</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" href="/nxb" style="color: black">Nhà xuất-->
+                    <!--                            bản</a>-->
+                    <!--                    </li>-->
+                </ul>
+                <form class="d-flex">
+                    <input
+                            style="    margin-top: 5px;"
+                            class="form-control text-dark me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                    />
+                    <button class="btn btn-outline-dark my-1 mx-1" type="submit">
+                        Search
+                    </button>
+
+                    <a href="/logout" class="btn btn-outline-dark my-1 mx-1">
+                        Logout
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="row table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="display: contents; overflow: auto;">
+        <table class="table table-dark table-borderless table-striped p-0" style="display: grid;overflow: auto;">
+<!--            <thead style="display: table">-->
+<!--            <tr>-->
+<!--                <th scope="col" class="col-1">ID</th>-->
+<!--                <th scope="col" class="col-1">Tên</th>-->
+<!--                <th scope="col" class="col-2">Ảnh</th>-->
+<!--                <th scope="col" class="col-1">Thể loại</th>-->
+<!--                <th scope="col" class="col-1">Tác giả</th>-->
+<!--                <th scope="col" class="col-1">NXB</th>-->
+<!--                <th scope="col" class="col-4">Nội dung</th>-->
+<!--                <th scope="col" class="col-1"></th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+            <tbody  style="width: 100%; height: 800px; flex-direction: column; flex-wrap: wrap;">
+            <tr>
+                <td>ID</td>
+                <td>Tên</td>
+                <td>Ảnh</td>
+                <td>Thể loại</td>
+                <td>Tác giả</td>
+                <td>NXB</td>
+                <td>Nội dung</td>
+                <td></td>
+            </tr>
+            {{#each comics}}
+                <tr>
+                    <td>{{this._id}}</td>
+                    <td>{{this.Ten}}</td>
+                    <td><img src="{{this.AnhDaiDien}}" alt="" style="width: 100%; height: 100%;"></td>
+                    <td>{{this.TheLoai}}</td>
+                    <td>{{this.TacGia}}</td>
+                    <td>{{this.NXB}}</td>
+                    <td>{{this.NgayCapNhat}}</td>
+                    <td>
+                        <button
+                                type="button"
+                                class="btn btn-primary m-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#UpdateModal"
+                                onclick="editComics('{{this._id}}', '{{this.Ten}}', '{{this.AnhDaiDien}}', '{{this.TheLoai}}',' {{this.TacGia}}', '{{this.NXB}}', '{{this.NgayCapNhat}}')"
+                        >
+                            Sửa
+                        </button>
+                        <a href="/comics/addPhoto/{{this._id}}" class="btn btn-primary m-2">
+                            Thêm
+                        </a>
+                        <button
+                                type="button"
+                                class="btn btn-primary m-2"
+                                data-bs-toggle="modal"
+                                data-bs-target="#DeleteModal"
+                                onclick="deleteUser('{{this._id}}')"
+                        >
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <!-- Button trigger modal -->
+        <div class="row" style="margin: auto;">
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+            >
+                Thêm truyện
+            </button>
+        </div>
+        <!-- Modal add-->
+        <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/comics/add" method="POST" autocomplete="off" accept-charset="UTF-8">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Thêm Truyện</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-4 row">
+                                    <label for="InputID" class="col-sm-3 col-form-label">ID:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="InputID"
+                                                placeholder="ID"
+                                                disabled
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="InputTen" class="col-sm-3 col-form-label">Tên
+                                        Truyện:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                name="Ten"
+                                                class="form-control text-dark"
+                                                id="InputTen"
+                                                placeholder="FullName"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="InputTen" class="col-sm-3 col-form-label">Ảnh đại diện:</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" id="image" onchange="previewFile()"/> <br>
+                                        <img id="img_preview" src="" height="200" alt="Image preview..."> <br>
+                                        <input type="hidden" name="anh_dai_dien" id="anh_dai_dien">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="InputTheLoai" class="col-sm-3 col-form-label">Thể
+                                        loại:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                name="TheLoai"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="InputTheLoai"
+                                                placeholder="category"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="InputTacGia" class="col-sm-3 col-form-label">Tác
+                                        giả:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                name="TacGia"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="InputTacGia"
+                                                placeholder="author"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="InputNXB" class="col-sm-3 col-form-label">Nhà
+                                        xuất bản</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                name="NXB"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="InputNXB"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="InputNgayCapNhat"
+                                            class="col-sm-3 col-form-label"
+                                    >Nội dung</label>
+                                    <div class="col-sm-9">
+                                        <textarea
+                                                id="InputNgayCapNhat"
+                                                name="NgayCapNhat"
+                                                class="form-control text-dark"
+                                        >
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Close
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    data-bs-dismiss="modal"
+                            >Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal update-->
+        <div
+                class="modal fade"
+                id="UpdateModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/comics/edit" method="POST" autocomplete="off" accept-charset="UTF-8">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa truyện</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-4 row">
+                                    <label for="UpdateID" class="col-sm-3 col-form-label">ID:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                name="UpdateID"
+                                                class="form-control text-dark"
+                                                id="UpdateID"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="UpdateTen" class="col-sm-3 col-form-label">Tên
+                                        Truyện:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                name="UpdateTen"
+                                                class="form-control text-dark"
+                                                id="UpdateTen"
+                                                placeholder="FullName"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Ảnh đại diện:</label>
+                                    <div class="col-sm-9">
+                                        <input type="file" id="imagess" onchange="previewFileEdit()"/> <br>
+                                        <img id="img_previews" src="" height="200" alt="Image preview..."> <br>
+                                        <input type="hidden" name="Upanh_dai_dien" id="anh_dai_diens">
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="UpdateTheLoai" class="col-sm-3 col-form-label">Thể
+                                        loại:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                name="UpdateTheLoai"
+                                                class="form-control text-dark"
+                                                id="UpdateTheLoai"
+                                                placeholder="Thể loại"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="UpdateTacGia" class="col-sm-3 col-form-label">Tác
+                                        giả:</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                name="UpdateTacGia"
+                                                class="form-control text-dark"
+                                                id="UpdateTacGia"
+                                                placeholder="author"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label for="UpdateNXB" class="col-sm-3 col-form-label">Nhà
+                                        xuất bản</label>
+                                    <div class="col-sm-9">
+                                        <input
+                                                type="text"
+                                                name="UpdateNXB"
+                                                class="form-control text-dark"
+                                                id="UpdateNXB"
+                                                placeholder="NXB"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label
+                                            for="UpdateNCN"
+                                            class="col-sm-3 col-form-label"
+                                    >Nội dung</label>
+                                    <div class="col-sm-9">
+                                        <textarea
+                                                class="form-control text-dark"
+                                                id="UpdateNCN"
+                                                name="UpdateNCN"
+                                        ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Close
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    data-bs-dismiss="modal"
+                            >Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal Delete-->
+        <div
+                class="modal fade"
+                id="DeleteModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/comics/delete" method="POST" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xóa truyện</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="DpInputID" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                name="DpInputID"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="DpInputID"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                    >No
+                                    </button>
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                    >Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

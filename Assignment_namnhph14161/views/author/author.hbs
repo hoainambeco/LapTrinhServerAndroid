@@ -1,0 +1,413 @@
+<script>
+    function editAuthor(id, name, phonenumber, email, birthday, address) {
+        document.getElementById("UInputID").value = id;
+        document.getElementById("UpdateFullName").value = name;
+        document.getElementById("InputPhoneNumber").value = phonenumber;
+        document.getElementById("UpdatestaticEmail").value = email;
+        document.getElementById("InputBirthDay").value = birthday;
+        document.getElementById("InputAddress").value = address;
+    }
+</script>
+<div class="content">
+    <nav
+            class="navbar navbar-expand-lg navbar-light bg-light"
+            style="opacity: 0.75;"
+    >
+        <div class="container-fluid">
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/home"
+                                style="color: black"
+                        >Admin center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/user"
+                                style="color: black"
+                        >Người dùng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                href="/comics"
+                                style="color: black"
+                        >Truyện tranh</a>
+                    </li>
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" href="/author" style="color: black">Tác-->
+<!--                            giả</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" href="/category" style="color: black">Thể-->
+<!--                            loại</a>-->
+<!--                    </li>-->
+<!--                    <li class="nav-item">-->
+<!--                        <a class="nav-link active" href="/nxb" style="color: black">Nhà xuất-->
+<!--                            bản</a>-->
+<!--                    </li>-->
+                </ul>
+                <form class="d-flex">
+                    <input
+                            style="    margin-top: 5px;"
+                            class="form-control text-dark me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                    />
+                    <button class="btn btn-outline-dark my-1 mx-1" type="submit">
+                        Search
+                    </button>
+
+                    <a href="/logout" class="btn btn-outline-dark my-1 mx-1">
+                        Logout
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="row" style="display: contents;">
+        <table class="table table-dark table-borderless p-0">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tên tác giả</th>
+                <th scope="col">Số điện thoại</th>
+                <th scope="col">Email</th>
+                <th scope="col">Ngày sinh</th>
+                <th scope="col">Địa chỉ</th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each author}}
+                <tr>
+                    <td>{{this.ID}}</td>
+                    <td>{{this.Name}}</td>
+                    <td>{{this.PhoneNumber}}</td>
+                    <td>{{this.Email}}</td>
+                    <td>{{this.Birthday}}</td>
+                    <td>{{this.Address}}</td>
+                    <td>
+                        <!--                        <a href="/user/edit/{{this.ID}}" class="btn btn-outline-dark">Edit</a>-->
+                        <!--                        <a href="/user/delete/{{this.ID}}" class="btn btn-outline-dark">Delete</a>-->
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#UpdateModal"
+                                onclick="editAuthor({{this.ID}}, '{{this.Name}}', '{{this.PhoneNumber}}', '{{this.Email}}', '{{this.Birthday}}', '{{this.Address}}')"
+                        >
+                            Sửa
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#DeleteModal"
+                        >
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <!-- Button trigger modal -->
+        <div class="row" style="margin: auto;">
+            <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+            >
+                Thêm tác giả
+            </button>
+        </div>
+        <!-- Modal add-->
+        <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Thêm</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-auto">
+                            <div class="mb-4 row">
+                                <label for="InputID" class="col-sm-3 col-form-label">ID:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="InputID"
+                                            placeholder="ID"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputFullName" class="col-sm-3 col-form-label">Tên
+                                    tác giả:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="InputFullName"
+                                            placeholder="FullName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputUserName" class="col-sm-3 col-form-label">Số điện thoại:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="PhoneNumber"
+                                            placeholder="Phone Number"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="staticEmail" class="col-sm-3 col-form-label">Emai:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="staticEmail"
+                                            placeholder="email@example.com"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="staticPassword" class="col-sm-3 col-form-label">Ngày sinh:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="date"
+                                            class="form-control text-dark"
+                                            id="Brithday"
+                                            placeholder="Brithday"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                        for="staticCPassword"
+                                        class="col-sm-3 col-form-label"
+                                >Địa chỉ:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="Address"
+                                            placeholder="Address"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                        >Close
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                onclick="{alert('thêm thành công')}"
+                        >Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal update-->
+        <div
+                class="modal fade"
+                id="UpdateModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sửa tác giả</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-auto">
+                            <div class="mb-4 row">
+                                <label for="UInputID" class="col-sm-3 col-form-label">ID:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="UInputID"
+                                            placeholder="ID"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="UpdateFullName" class="col-sm-3 col-form-label">Tên
+                                    tác giả:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="UpdateFullName"
+                                            placeholder="FullName"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputPhoneNumber" class="col-sm-3 col-form-label">số điện thoại:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="InputPhoneNumber"
+                                            placeholder="Phone Number"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="UpdatestaticEmail" class="col-sm-3 col-form-label">Email:</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="UpdatestaticEmail"
+                                            placeholder="email@example.com"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="InputBirthDay" class="col-sm-3 col-form-label">Ngày sinh</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="date"
+                                            class="form-control text-dark"
+                                            id="InputBirthDay"
+                                            placeholder="BirthDay"
+                                    />
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label
+                                        for="InputAddress"
+                                        class="col-sm-3 col-form-label"
+                                >Địa chỉ</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            type="text"
+                                            class="form-control text-dark"
+                                            id="InputAddress"
+                                            placeholder="address"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                        >Close
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-dismiss="modal"
+                                onclick="{alert('sửa thành công')}"
+                        >Save changes
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Delete-->
+        <div
+                class="modal fade"
+                id="DeleteModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xóa truyện</h5>
+                        <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-auto">
+                            <div class="mb-3 row">
+                                <div class="col">
+                                    <h1 class="text-dark text-center">Bạn chắc chắn muốn xóa chứ?</h1>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                >No
+                                </button>
+                                <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        data-bs-dismiss="modal"
+                                        onclick="{alert('xóa thành công')}"
+                                >Yes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

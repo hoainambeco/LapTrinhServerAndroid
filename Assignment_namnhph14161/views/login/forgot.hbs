@@ -1,0 +1,34 @@
+<div class="login">
+  <h1>Khôi phục mật khẩu</h1>
+  <form method="post" action="/forgot">
+    <input type="text" name="RFirstNam" placeholder="First Name" required="required" />
+    <input type="text" name="RLastName" placeholder="Last Name" required="required" />
+    <input type="text" name="RUserName" placeholder="UserName" required="required" />
+      {{#if message2}}
+          <label for="message" class="text-danger my-1">{{message2}}</label>
+      {{/if}}
+    <input type="email" name="REmail" placeholder="Email" required="required" />
+      {{#if message}}
+          <label for="message" class="text-danger my-1">{{message}}</label>
+      {{/if}}
+    <input
+      type="password"
+      name="RPassword"
+      placeholder="New Password"
+      required="required"
+    />
+    <input
+      type="password"
+      name="RCPassword"
+      placeholder="Confirm Password"
+      required="required"
+    />
+      {{#if error}}
+          <label for="message" class="text-danger my-1">{{error}}</label>
+      {{/if}}
+    <Button type="submit" class="btn btn-primary btn-block btn-large">
+      Áp dụng
+    </Button>
+<!--      <a href="/login" class="btn btn-primary btn-block btn-large">Áp dụng</a>-->
+  </form>
+</div>

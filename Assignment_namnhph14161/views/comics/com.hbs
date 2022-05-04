@@ -1,0 +1,153 @@
+<script>
+    function editComics(id, Ten,AnhDaiDien, TheLoai, TacGia, NXB, NgayCapNhat) {
+        document.getElementById('UpdateID').value = id;
+        document.getElementById('UpdateTen').value = Ten;
+        document.querySelector('#img_previews').src = AnhDaiDien;
+        document.getElementById('UpdateTheLoai').value = TheLoai;
+        document.getElementById('UpdateTacGia').value = TacGia;
+        document.getElementById('UpdateNXB').value = NXB;
+        document.getElementById('UpdateNCN').value = NgayCapNhat;
+    }
+
+    function deleteUser(id) {
+        document.getElementById("DpInputID").value = id;
+    }
+
+    function previewFile() {
+        const preview = document.querySelector('#img_preview');
+        const file = document.querySelector('#image').files[0];
+        const anh_dai_dien = document.querySelector('#anh_dai_dien');
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+            anh_dai_dien.value = reader.result;// cái này để post lên server
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function previewFileEdit() {
+        const preview = document.querySelector('#img_previews');
+        const file = document.querySelector('#imagess').files[0];
+        const anh_dai_dien = document.querySelector('#anh_dai_diens');
+        const reader = new FileReader();
+
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+            anh_dai_dien.value = reader.result;// cái này để post lên server
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function converBase64() {
+        const file = document.querySelector('#images').files[1];
+        const anh_noi_dung = document.querySelector('#anh_noi_dung');
+        const reader = new FileReader();
+        reader.addEventListener("load", function () {
+            anh_noi_dung.value = reader.result;
+            alert(file.name);
+        }, false);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+<div class="content">
+    <nav
+            class="navbar navbar-expand-lg navbar-light bg-light"
+            style="opacity: 0.75;"
+    >
+        <div class="container-fluid">
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/home"
+                                style="color: black"
+                        >Admin center</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                aria-current="page"
+                                href="/user"
+                                style="color: black"
+                        >Người dùng</a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link active"
+                                href="/comics"
+                                style="color: black"
+                        >Truyện tranh</a>
+                    </li>
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" href="/author" style="color: black">Tác-->
+                    <!--                            giả</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" href="/category" style="color: black">Thể-->
+                    <!--                            loại</a>-->
+                    <!--                    </li>-->
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a class="nav-link active" href="/nxb" style="color: black">Nhà xuất-->
+                    <!--                            bản</a>-->
+                    <!--                    </li>-->
+                </ul>
+                <form class="d-flex">
+                    <input
+                            style="    margin-top: 5px;"
+                            class="form-control text-dark me-2"
+                            type="search"
+                            placeholder="Search"
+                            aria-label="Search"
+                    />
+                    <button class="btn btn-outline-dark my-1 mx-1" type="submit">
+                        Search
+                    </button>
+
+                    <a href="/logout" class="btn btn-outline-dark my-1 mx-1">
+                        Logout
+                    </a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="row table-responsive table-wrapper-scroll-y my-custom-scrollbar" style="display: contents; overflow: auto;">
+        <div class="table table-dark table-borderless table-striped p-0" style="display: grid;overflow: auto;">
+            <div>
+                {{#if comics}}
+                    <h1>{{comics.Ten}}</h1>
+                    <img src="{{comics.AnhDaiDien}}" alt=""/>
+                    <h1>{{comics.TheLoai}}</h1>
+                    <h1>{{comics.TacGia}}</h1>
+                    <h1>{{comics.NXB}}</h1>
+                    <h1>{{comics.NgayCapNhat}}</h1>
+                    {{#each comics}}
+                        <h1>{{comics.image_detail}}</h1>
+                    {{/each}}
+                {{/if}}
+            </div>
+        </div>
+
+    </div>
+</div>

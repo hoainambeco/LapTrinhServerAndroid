@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body class="container" style="background-color: blue">
+    <script>
+      //1. call back là một hàm dùng để gọi lại khi hoàn thành một tác vụ nào đó
+      // ví dụ như đổi màu trang web sau khi hiển thị được 5 giây.
+      //setTimeout(hàm callback, thời gian delay));
+      function changeColor() {
+        setTimeout(function () {
+          // document.body.style.backgroundColor = "red";
+          // document.querySelector("body").style.backgroundColor = "red";
+          document.getElementsByClassName(
+            "container"
+          )[0].style.backgroundColor = "red";
+        }, 500);
+        setTimeout(function () {
+          document.getElementsByClassName(
+            "container"
+          )[0].style.backgroundColor = "blue";
+          changeColor();
+        }, 1000);
+      }
+      changeColor();
+      // 2 sử dụng 1 hàm riêng rồi chuyền vào call back để gọi lại
+      function thongBao() {
+        alert("Đã thực hiện xong");
+      }
+      //   setTimeout(thongBao, 5000);
+
+      // 1. code theo cơ chế đồng bộ lệnh nào viết trước sẽ trả về kết quả trước.
+      // 2. code theo cơ chế bất đồng bộ: có nhiều việc được gọi ra thực hiện, việc nào tốn ít thời gian thì
+      // trả về kết quả trước, việc nào tốn thời gian thì trả về kết quả sau ==> không quan tâm thứ tự gọi công việc.
+      // ví dụ việc 1 xử lý hết 5s
+      //việc 2 xử lý hết 2s
+      //việc 3 xử lý hết 10s
+      //việc 4 xử lý hết 1s
+      setTimeout(function () {
+        console.log("việc số 1");
+      }, 5000);
+      setTimeout(function () {
+        console.log("việc số 2");
+      }, 2000);
+      setTimeout(function () {
+        console.log("việc số 3");
+      }, 10000);
+      setTimeout(function () {
+        console.log("việc số 4");
+      }, 1000);
+    </script>
+  </body>
+</html>

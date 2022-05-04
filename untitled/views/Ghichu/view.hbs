@@ -1,0 +1,211 @@
+<script>
+    function deleteUser(id) {
+        document.getElementById("DpInputID").value = id;
+    }
+
+    function Edit(id, tieude, noidung, anhdaidien, Action) {
+        document.getElementById("UpInputID").innerHTML = id;
+        document.getElementById("textUpInputID").value = id;
+        document.getElementById("UpTieuDe").innerHTML = tieude;
+        document.getElementById("textUpTieuDe").value = tieude;
+        document.getElementById("UpNoiDung").innerHTML = noidung;
+        document.getElementById("textUpNoiDung").value = noidung;
+        document.getElementById("UpAnhDaiDien").src = anhdaidien;
+        document.getElementById("textUpAnhDaiDien").value = anhdaidien;
+        if (Action === 'Đang xử lý') {
+            document.getElementById("UpInputRoles").value = 'Đang xử lý';
+        } else {
+            document.getElementById("UpInputRoles").value = 'Hoàn thành';
+        }
+    }
+</script>
+<div class="content">
+    <form class="d-flex" action="/index/find" method="POST" autocomplete="off">
+        <input
+                style="margin-top: 5px; font-size: 20px"
+                class="form-control me-2  bg-light"
+                type="search"
+                name="IPsearch"
+                placeholder="Search"
+                aria-label="Search"
+        />
+        <button class="btn btn-outline-dark my-1 mx-1" type="submit">
+            Search
+        </button>
+    </form>
+    <div class="row table-responsive table-wrapper-scroll-y my-custom-scrollbar"
+         style="display: contents; overflow: auto">
+
+        <table class="center table table-dark table-striped table-borderless p-0 table-full-width"
+               style="display: grid;overflow: auto;">
+            <tbody style="height: 800px; flex-direction: column; flex-wrap: wrap; margin: auto; min-width: 1500px">
+            <tr>
+                <td>ID</td>
+                <td>Tiêu đề</td>
+                <td>Nội dung</td>
+                <td>Ảnh đại diện</td>
+                <td>Trạng thái</td>
+                <td></td>
+            </tr>
+            {{#each Index}}
+                <tr class="col-12">
+                    <td class="col-2">{{this._id}}</td>
+                    <td class="col-1">{{this.TieuDe}}</td>
+                    <td class="col-3">{{this.NoiDung}}</td>
+                    <td class="col-2"><img src="{{this.AnhDaiDien}}" alt="" style="width: 100px; height: 100px;"></td>
+                    <td class="col-1">{{this.TrangThai}}</td>
+                    <td class="col-4">
+                        <a href="index/edit/{{this._id}}" class="btn btn-primary">
+                            Sửa
+                        </a>
+
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#UpdateModal"
+                                onclick="Edit('{{this._id}}','{{this.TieuDe}}','{{this.NoiDung}}','{{this.AnhDaiDien}}','{{this.TrangThai}}')"
+                        >
+                            Action
+                        </button>
+                        <button
+                                type="button"
+                                class="btn btn-primary"
+                                data-bs-toggle="modal"
+                                data-bs-target="#DeleteModal"
+                                onclick="deleteUser('{{this._id}}')"
+                        >
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        <!-- Button trigger modal -->
+        <div class="row" style="margin: auto;">
+            <a href="index/add" class="btn btn-primary"
+            >
+                Thêm người dùng
+            </a>
+        </div>
+
+        <!-- Modal -->
+        <div
+                class="modal fade"
+                id="UpdateModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/index/editAction" method="POST" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa trạng thái</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <p style="float: left">ID: </p>
+                                <p class="text-dark" id="UpInputID"></p>
+                                <p style="float: left">Tiêu đề: </p>
+                                <p class="text-dark" id="UpTieuDe"></p>
+                                <p style="float: left">Nội dung: </p>
+                                <p class="text-dark" id="UpNoiDung"></p>
+                                <img id="UpAnhDaiDien" src="" alt=""/>
+                                <input name="UpInputID" id="textUpInputID" hidden/>
+                                <input name="UpTieuDe" id="textUpTieuDe" hidden/>
+                                <input name="UpNoiDung" id="textUpNoiDung" hidden/>
+                                <input name="UpAnhDaiDien" id="textUpAnhDaiDien" hidden/>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Trạng thái</label>
+                                    <div class="col-sm-8">
+                                        <label>
+                                            <select id="UpInputRoles" name="UpTrangThai">
+                                                <option value="Hoàn thành">Hoàn thành</option>
+                                                <option value="Đang xử lý">Đang xử lý</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                            >Close
+                            </button>
+                            <button
+                                    type="submit"
+                                    class="btn btn-primary">
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Modal Delete-->
+        <div
+                class="modal fade"
+                id="DeleteModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <form action="/index/delete" method="POST" autocomplete="off">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Xóa ghi chú</h5>
+                            <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                            ></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-auto">
+                                <div class="mb-3 row">
+                                    <label for="DpInputID" class="col-sm-2 col-form-label">ID:</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                                name="DpInputID"
+                                                type="text"
+                                                class="form-control text-dark"
+                                                id="DpInputID"
+                                                placeholder="ID"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button
+                                            type="button"
+                                            class="btn btn-secondary"
+                                            data-bs-dismiss="modal"
+                                    >No
+                                    </button>
+                                    <button
+                                            type="submit"
+                                            class="btn btn-primary"
+                                            data-bs-dismiss="modal"
+                                    >Yes
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
